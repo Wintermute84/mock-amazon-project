@@ -1,6 +1,6 @@
-import {cart} from '../data/cart.js';
+import {cart,addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
-
+//import * as cartModule from '../data/products.js';
 let html='';
 products.forEach((product)=>{
   html += `<div class="product-container">
@@ -54,40 +54,35 @@ products.forEach((product)=>{
         </div>`;
 });
 
+
+
+
+function updateCartQuantity(){
+  let cartQuantity = 0;
+  cart.forEach((cartItem) =>{
+    cartQuantity += cartItem.quantity;
+    });
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
 document.querySelector('.js-products-grid').innerHTML = html;
 document.querySelectorAll('.js-add-to-cart')
   .forEach((button)=>{
     let addedMessageTimeoutId;
     button.addEventListener('click', () => {
-        const productId = button.dataset.productId;
-        let matchingItem;
-        cart.forEach((item)=>{
-          if(productId === item.productId){
-            matchingItem = item;
-          }
-        });
+    const productId = button.dataset.productId;
+    addToCart(productId);
 
-        if(matchingItem){
-          matchingItem.quantity += 1;
-        }else {
-        cart.push({
-          productId: productId,
-          quantity:1
-        });}
-        let cartQuantity = 0;
-        cart.forEach((item) =>{
-          cartQuantity += item.quantity;
-          })
-      document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-      const addedBtn = document.querySelector(`.js-added-to-cart-${productId}`);
-      addedBtn.classList.add('added-to-cart-visible');
-      if(addedMessageTimeoutId){
-      clearTimeout(addedMessageTimeoutId);
-     }
-     const messageTimeoutId = setTimeout(()=>{
-      addedBtn.classList.remove('added-to-cart-visible');
-     },2000);
-     addedMessageTimeoutId = messageTimeoutId;
-  })
+    const addedBtn = document.querySelector(`.js-added-to-cart-${productId}`);
+    addedBtn.classList.add('added-to-cart-visible');
+    if(addedMessageTimeoutId){
+    clearTimeout(addedMessageTimeoutId);
+   }
+   const messageTimeoutId = setTimeout(()=>{
+    addedBtn.classList.remove('added-to-cart-visible');
+   },2000);
+   addedMessageTimeoutId = messageTimeoutId;
+
+    updateCartQuantity();
 });
-
+});
