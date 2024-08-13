@@ -1,3 +1,5 @@
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+
 export function isWeekend(date){
   const day = date.format('dddd');
   if(day === 'Saturday'){
@@ -19,4 +21,13 @@ export function calculateDeliveryDate(today, deliveryOption){
     deliveryDays--;
   }
   return date;
+}
+
+export function calculateDate(deliveryOption){
+      const today = dayjs();
+      const deliveryDate = calculateDeliveryDate(today, deliveryOption);
+      const dateString = deliveryDate.format(
+        'dddd, MMMM D'
+      );
+      return dateString;
 }
