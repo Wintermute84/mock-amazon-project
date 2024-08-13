@@ -4,6 +4,7 @@ import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { isWeekend, calculateDeliveryDate } from '../utils/date.js';
 
 export function renderOrderSummary(){
   let cartSummaryHTML = '';
@@ -11,14 +12,10 @@ export function renderOrderSummary(){
     const productId = cartItem.productId;
     const matchingProduct = getProduct(productId);
     const deliveryOptionId = cartItem.deliveryOptionId;
-    let deliveryOption = getDeliveryOption(deliveryOptionId);
+    const deliveryOption = getDeliveryOption(deliveryOptionId);
 
   const today = dayjs();
-  const deliveryDate = today.add(
-    deliveryOption.deliveryDays, 
-    'days'
-  );
-
+  const deliveryDate = calculateDeliveryDate(today, deliveryOption);
   const dateString = deliveryDate.format(
     'dddd, MMMM D'
   );
@@ -72,10 +69,7 @@ export function renderOrderSummary(){
     let html = '';
     deliveryOptions.forEach((deliveryOption)=>{
       const today = dayjs();
-      const deliveryDate = today.add(
-        deliveryOption.deliveryDays, 
-        'days'
-      );
+      const deliveryDate = calculateDeliveryDate(today, deliveryOption);
 
       const dateString = deliveryDate.format(
         'dddd, MMMM D'
