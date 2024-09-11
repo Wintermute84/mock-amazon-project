@@ -59,6 +59,29 @@ class Clothing extends Product {
   }
 }
 
+
+class Appliance extends Product {
+  instructionsLink;
+  warrantyLink;
+  constructor(productDetails){
+    super(productDetails);
+    this.instructionsLink = productDetails.instructionsLink;
+    this.warrantyLink = productDetails.warrantyLink;
+  }
+
+  extraInfoHTML() {
+    return `
+      <a href="${this.instructionsLink}" target="_blank">
+      Instructions
+      </a>
+
+      <a href="${this.warrantyLink}" target="_blank">
+      Warranty
+      </a>
+    `;
+  }
+}
+
 /*
 const date = new Date();
 console.log(date);
@@ -121,6 +144,9 @@ export const products = [
       stars: 5,
       count: 2197
     },
+    type:'appliance',
+    instructionsLink:'images/appliance-instructions.png',
+    warrantyLink:'images/appliance-warranty.png',
     priceCents: 1899,
     keywords: [
       "toaster",
@@ -306,6 +332,9 @@ export const products = [
       stars: 5,
       count: 846
     },
+    type:'appliance',
+    instructionsLink:'images/appliance-instructions.png',
+    warrantyLink:'images/appliance-warranty.png',
     priceCents: 3074,
     keywords: [
       "water boiler",
@@ -611,6 +640,9 @@ export const products = [
       stars: 4.5,
       count: 1211
     },
+    type:'appliance',
+    instructionsLink:'images/appliance-instructions.png',
+    warrantyLink:'images/appliance-warranty.png',
     priceCents: 2250,
     keywords: [
       "coffeemakers",
@@ -671,6 +703,9 @@ export const products = [
       stars: 4,
       count: 3
     },
+    type:'appliance',
+    instructionsLink:'images/appliance-instructions.png',
+    warrantyLink:'images/appliance-warranty.png',
     priceCents: 10747,
     keywords: [
       "food blenders",
@@ -728,6 +763,9 @@ export const products = [
 ].map((productDetails) => {
   if(productDetails.type === 'clothing'){
     return new Clothing(productDetails);
+  }
+  else if(productDetails.type === 'appliance'){
+    return new Appliance(productDetails);
   }
   else{
     return new Product(productDetails);
