@@ -60,7 +60,6 @@ export function removeFromCart(productId){
 export function calculateQuantity(){
   let cartQuantity = 0;
   cart.forEach((cartItem) =>{
-    console.log(cartItem);
     cartQuantity += cartItem.quantity;
     });
   return cartQuantity;
