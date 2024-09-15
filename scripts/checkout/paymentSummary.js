@@ -3,7 +3,7 @@ import { getProduct } from '../../data/products.js';
 import {getDeliveryOption } from '../../data/deliveryOptions.js';
 import {formatCurrency} from '../utils/money.js'
 import { addOrder } from '../../data/orders.js';
-
+import { renderOrderSummary } from './orderSummary.js';
 
 export function renderPaymentSummary(){
   let productPriceCents = 0;
@@ -77,8 +77,8 @@ export function renderPaymentSummary(){
     } catch (error) {
       console.log('Unexpected Error.. Try again later.');
     }
-    
-    window.location.href = 'orders.html';
-    
+    let cart = [];
+    localStorage.setItem('cart',JSON.stringify(cart));
+    window.location.href = 'orders.html';    
   });
 }
