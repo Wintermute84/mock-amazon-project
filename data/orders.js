@@ -11,16 +11,12 @@ export function addOrder(order) {
   saveToStorage();
 }
 
-let cartLength = JSON.parse(localStorage.getItem('cart')) || [];
 
-
-document.querySelector('.js-cart-quantity').innerHTML = cartLength.length; 
-
-function saveToStorage() {
+export function saveToStorage() {
   localStorage.setItem('orders', JSON.stringify(orders));
 }
 
-function loadFromStorage() {
+export function loadFromStorage() {
   orders = JSON.parse(localStorage.getItem('orders')) || [];
   return orders;
 }
@@ -99,7 +95,7 @@ export function renderOrderHtml(){
 }
 
 
-async function loadOrder() {
+export async function loadOrder() {
     try {
       //throw 'error1';
       await  loadProductsFetch();
@@ -107,6 +103,9 @@ async function loadOrder() {
     console.log('unexpected error.. Please try again later');
     }
     renderOrderHtml();
+    let cartLength = [];
+    localStorage.setItem('cart', JSON.stringify(cartLength));
+    document.querySelector('.js-cart-quantity').innerHTML = cartLength.length; 
    }
 
 

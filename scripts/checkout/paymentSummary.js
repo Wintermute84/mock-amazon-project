@@ -2,7 +2,7 @@ import {cart, calculateQuantity} from '../../data/cart.js'
 import { getProduct } from '../../data/products.js';
 import {getDeliveryOption } from '../../data/deliveryOptions.js';
 import {formatCurrency} from '../utils/money.js'
-import { addOrder } from '../../data/orders.js';
+import { addOrder, loadOrder, renderOrderDetails, renderOrderHtml,saveToStorage,loadFromStorage } from '../../data/orders.js';
 import { renderOrderSummary } from './orderSummary.js';
 
 export function renderPaymentSummary(){
@@ -77,8 +77,7 @@ export function renderPaymentSummary(){
     } catch (error) {
       console.log('Unexpected Error.. Try again later.');
     }
-    let cart = [];
-    localStorage.setItem('cart',JSON.stringify(cart));
     window.location.href = 'orders.html';    
+    loadOrder();
   });
 }
